@@ -1,0 +1,5 @@
+fetch_data.php
+- changes
+            'RESIGNEDDATE' => isset($row['DATERESIGNED']) ? date('m-d-Y',strtotime($row['DATERESIGNED'])) : "",
+
+
