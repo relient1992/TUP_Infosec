@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // add other views if needed
     }
 
+    const rootstyles = getComputedStyle(document.documentElement);
+    const fontColor = rootstyles.getPropertyValue('--color-dark').trim();
+
     function initActiveAttritionView() {
         const applyBtn = document.getElementById("apply-btn");
         const startInput = document.getElementById("start-date");
@@ -136,7 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
         chart: {
             type: 'area',
             height: 300,
-            width: '100%'
+            width: '100%',
+            foreColor: fontColor  // ✅ Global font color
         },
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth' },
@@ -150,10 +154,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 "2018-09-19T04:30:00.000Z",
                 "2018-09-19T05:30:00.000Z",
                 "2018-09-19T06:30:00.000Z"
-            ]
+            ],
+            labels: {
+                style: {
+                    colors: fontColor  // ✅ X-axis label color
+                }
+            },
+            axisBorder: {
+                show: true,
+                color: fontColor
+            },
+            axisTicks: {
+                show: true,
+                color: fontColor
+            },
+            title: {
+                style: {
+                    color: fontColor
+                }
+            }
         },
-        tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
-        responsive: [{ breakpoint: 480, options: { chart: { height: 200 } } }]
+        yaxis: {
+            labels: {
+                style: {
+                    colors: fontColor  // ✅ Y-axis label color
+                }
+            },
+            title: {
+                style: {
+                    color: fontColor
+                }
+            }
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: { height: 200 }
+            }
+        }]
     };
 
     new ApexCharts(document.querySelector("#chart1"), options1).render();

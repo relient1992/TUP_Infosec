@@ -627,7 +627,7 @@ main table tbody td:hover,
     flex-direction: column;
     gap: 1.5rem;
     width: 300px;
-    align-self: flex-start; /* Ensures top-aligned on right */
+    align-self: flex-start;
 }
 
 /* === EMPLOYEE COUNT === */
@@ -705,24 +705,24 @@ main table tbody td:hover,
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: transparent; /* Changed from red for cleaner layout */
+  background-color: transparent;
   box-sizing: border-box;
 }
 
-/* Each chart container adapts to screen size */
+
 .chart-container {
-  flex: 1 1 300px; /* Grow, shrink, base width */
+  flex: 1 1 300px; 
   max-width: 800px;
   min-width: 280px;
   box-sizing: border-box;
   padding: 1rem;
-  background-color: #fff;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin: 0 auto;
 }
 
-/* Chart divs take full size of container */
+
 #chart1, #chart2, #chart3, #chart4  {
   width: 100%;
   height: 100%;

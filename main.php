@@ -66,10 +66,10 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>Project Efficiency</h3>
                 </a>
 
-                <!-- <a href="#">
+                <a href="#">
                     <span class="material-icons-sharp">calendar_month</span>
                     <h3>Attendance & Absenteeism</h3>
-                </a> -->
+                </a>
 
                 <hr class="menu-divider">
 
