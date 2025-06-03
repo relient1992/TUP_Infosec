@@ -23,7 +23,10 @@ if (!isset($_SESSION['employee_id'])) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
     rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body>
     <div class="container">
@@ -63,10 +66,10 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>Project Efficiency</h3>
                 </a>
 
-                <a href="#">
+                <!-- <a href="#">
                     <span class="material-icons-sharp">calendar_month</span>
                     <h3>Attendance & Absenteeism</h3>
-                </a>
+                </a> -->
 
                 <hr class="menu-divider">
 
@@ -92,10 +95,10 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>LHI Financial</h3>
                 </a>
 
-                <a href="#">
+                <!-- <a href="#">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Settings</h3>
-                </a>
+                </a> -->
 
                 <a href="#" id="logout-link">
                     <span class="material-icons-sharp">logout</span>
@@ -174,6 +177,8 @@ if (!isset($_SESSION['employee_id'])) {
     <script src="js/project_employees.js"></script>
     <script src="js/index.js"></script>
     <script src="js/router.js"></script>
+
+    
 
     
 
