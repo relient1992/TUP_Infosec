@@ -66,10 +66,18 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>Project Efficiency</h3>
                 </a>
 
-                <a href="#">
-                    <span class="material-icons-sharp">calendar_month</span>
-                    <h3>Attendance & Absenteeism</h3>
-                </a>
+                <div class="dropdown">
+                    <a href="#" class="parent">
+                        <span class="material-icons-sharp">calendar_month</span>
+                        <h3>Attendance & Absenteeism</h3>
+                        <span class="dropdown-indicator">&#9662;</span>
+                    </a>
+                    <div class="child-dropdown">
+                        <a href="#"><h3>LHI Absenteeism</h3></a>
+                        <a href="#"><h3>BPS Absenteeism</h3></a>
+                        <a href="#"><h3>BPS Attendance DB</h3></a>
+                    </div>
+                </div>
 
                 <hr class="menu-divider">
 
@@ -90,7 +98,7 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>BPS Financial</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="lhi-financial">
                     <span class="material-icons-sharp">insert_chart</span>
                     <h3>LHI Financial</h3>
                 </a>
@@ -107,11 +115,46 @@ if (!isset($_SESSION['employee_id'])) {
 
             </div>
 
+
         </aside>
+
 
         <!-- END OF ASIDE -->
 
         <main id="main-content">
+
+            <div id="loading-screen" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999; /* Ensure it's on top of everything */
+                transition: opacity 0.5s ease-out; /* Smooth fade-out */">
+                <div class="spinner" style="
+                    border: 4px solid rgba(0, 0, 0, 0.1);
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    border-left-color: #09f;
+                    animation: spin 1s ease infinite;">
+                </div>
+                <p style="margin-left: 10px; font-family: sans-serif; font-size: 1.2em;">Loading...</p>
+            </div>
+
+            
+
+            <style>
+                /* Basic spinner animation - You can put this in your style.css as well */
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
 
             <div id="app"></div>
             
@@ -149,24 +192,6 @@ if (!isset($_SESSION['employee_id'])) {
                
             </div>
 
-            <!-- <div class="right-container">
-                <div class="employee-count">
-                <h2>Total Project Employees</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>Employee Count</th>
-                        <th>Site</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
-                </div>
-            </div> -->
-
         </div>
         <!-- END OF RIGHT SECTION -->
 
@@ -177,8 +202,7 @@ if (!isset($_SESSION['employee_id'])) {
     <script src="js/project_employees.js"></script>
     <script src="js/index.js"></script>
     <script src="js/router.js"></script>
-
-    
+    <script src="js/sidebartoggle.js"></script>
 
     
 
