@@ -64,11 +64,15 @@ if ($user) {
     exit;
 }
 
-// Hash and insert
+// Hash and insert into user_accounts
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 $insert = $pdo->prepare("INSERT INTO user_accounts (employee_id, password) VALUES (?, ?)");
 $insert->execute([$employee_id, $hashed_password]);
+
+// Insert default role into user_roles
+$insertRole = $pdo->prepare("INSERT INTO user_roles (employee_id, role_id) VALUES (?, ?)");
+$insertRole->execute([$employee_id, 4]);
 
 echo json_encode([
     'status' => 'success',

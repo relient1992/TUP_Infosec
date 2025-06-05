@@ -1,6 +1,10 @@
 <?php
 session_start();  // Start the session
 
+$firstname = $_SESSION['firstname'] ?? 'Guest';
+$position = $_SESSION['position'] ?? 'Unknown';
+
+$role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'Guest';
 // Prevent browser caching
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
 header("Pragma: no-cache"); // HTTP 1.0
@@ -27,6 +31,11 @@ if (!isset($_SESSION['employee_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        const USER_ROLE = <?php echo json_encode($role); ?>;
+        sessionStorage.setItem("user_role", USER_ROLE);
+        console.log("USER_ROLE set to:", USER_ROLE);
+    </script>
 </head>
 <body>
     <div class="container">
@@ -41,27 +50,27 @@ if (!isset($_SESSION['employee_id'])) {
             </div>
 
             <div class="sidebar">
-                <a href="#" class="Active">
+                <a href="#" class="Active" data-view="active_attrition">
                     <span class="material-icons-sharp">group</span>
                     <h3>Active & Attrition</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="team_member">
                     <span class="material-icons-sharp">supervisor_account</span>
                     <h3>Team Member</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="bps_dashboard">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>BPS Dashboard</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="bps_bfp">
                     <span class="material-icons-sharp">money</span>
                     <h3>BPS BFP</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="project_efficiency">
                     <span class="material-icons-sharp">query_stats</span>
                     <h3>Project Efficiency</h3>
                 </a>
@@ -73,36 +82,48 @@ if (!isset($_SESSION['employee_id'])) {
                         <span class="dropdown-indicator">&#9662;</span>
                     </a>
                     <div class="child-dropdown">
-                        <a href="#"><h3>LHI Absenteeism</h3></a>
-                        <a href="#"><h3>BPS Absenteeism</h3></a>
-                        <a href="#"><h3>BPS Attendance DB</h3></a>
+                        <a href="#" data-view="lhi_absenteeism"><h3>LHI Absenteeism</h3></a>
+                        <a href="#" data-view="bps_absenteeism"><h3>BPS Absenteeism</h3></a>
+                        <a href="#" data-view="bps_attendance_db"><h3>BPS Attendance DB</h3></a>
                     </div>
                 </div>
 
                 <hr class="menu-divider">
 
-                <a href="#">
+                <a href="#" data-view="lhi_dashboard">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>LHI Dashboard</h3>
                 </a>
 
-                <a href="#">
+                <a href="#" data-view="lhi_bfp">
                     <span class="material-icons-sharp">money</span>
                     <h3>LHI BFP</h3>
                 </a>
 
                 <hr class="menu-divider">
 
-                <a href="#">
+                <a href="#" data-view="bps_financial">
                     <span class="material-icons-sharp">bar_chart</span>
                     <h3>BPS Financial</h3>
                 </a>
 
-                <a href="#" data-view="lhi-financial">
+                <a href="#" data-view="lhi_financial">
                     <span class="material-icons-sharp">insert_chart</span>
                     <h3>LHI Financial</h3>
                 </a>
 
+                <div class="dropdown">
+                    <a href="#" class="parent">
+                        <span class="material-icons-sharp">calendar_month</span>
+                        <h3>BU Review</h3>
+                        <span class="dropdown-indicator">&#9662;</span>
+                    </a>
+                    <div class="child-dropdown">
+                        <a href="#" data-view="bu_bps"><h3>BU BPS</h3></a>
+                        <a href="#" data-view="bu_lhi"><h3>BU LHI</h3></a>
+                        
+                    </div>
+                </div>
                 <!-- <a href="#">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Settings</h3>
@@ -121,40 +142,12 @@ if (!isset($_SESSION['employee_id'])) {
 
         <!-- END OF ASIDE -->
 
-        <main id="main-content">
-
-            <div id="loading-screen" style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 9999; /* Ensure it's on top of everything */
-                transition: opacity 0.5s ease-out; /* Smooth fade-out */">
-                <div class="spinner" style="
-                    border: 4px solid rgba(0, 0, 0, 0.1);
-                    width: 36px;
-                    height: 36px;
-                    border-radius: 50%;
-                    border-left-color: #09f;
-                    animation: spin 1s ease infinite;">
-                </div>
-                <p style="margin-left: 10px; font-family: sans-serif; font-size: 1.2em;">Loading...</p>
+            <div id="loading-screen">
+                <div class="spinner"></div>
+                <p>loading...</p>
             </div>
 
-            
-
-            <style>
-                /* Basic spinner animation - You can put this in your style.css as well */
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            </style>
+        <main id="main-content">
 
             <div id="app"></div>
             
@@ -177,8 +170,8 @@ if (!isset($_SESSION['employee_id'])) {
                     </div>
                     <div class="profile">
                         <div class="info">
-                            <p>Hi, <b>Daryl</b></p>
-                            <small class="text-muted">FP&A</small>
+                            <p>Hi, <b><?php echo htmlspecialchars($firstname); ?></b></p>
+                            <small class="text-muted"><?php echo htmlspecialchars($position); ?></small>
                         </div>
                         <div class="profile-photo">
                             <span class="material-icons-sharp">account_circle</span>
@@ -203,6 +196,8 @@ if (!isset($_SESSION['employee_id'])) {
     <script src="js/index.js"></script>
     <script src="js/router.js"></script>
     <script src="js/sidebartoggle.js"></script>
+    <script src="js/role_access.js"></script>
+    
 
     
 
