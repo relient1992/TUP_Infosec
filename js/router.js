@@ -287,6 +287,8 @@ function initializeViewScripts(viewName) {
         initBpsDashboardCharts();
     } else if (viewName === "active_attrition") {
         initActiveAttritionView();
+    } else if (viewName === "team_member") {
+        initTeamMemberView();
     }
 }
 
@@ -324,6 +326,545 @@ function initActiveAttritionView() {
         }
     }
 }
+
+function initTeamMemberView() {
+    console.log("Initializing team member view...");
+    
+    // Initialize the team member functionality
+    const select = document.getElementById("teamSelect");
+    const tbody = document.querySelector("#team-table tbody");
+    
+    if (!select || !tbody) {
+        console.error("Team member elements not found");
+        return;
+    }
+
+    // Create CSV export button
+    createCSVExportButton();
+
+    // Clear existing options
+    select.innerHTML = '';
+
+    // Add default placeholder option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "-- Select Supervisor --";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    select.appendChild(defaultOption);
+
+    console.log("Loading team names...");
+
+    // Populate dropdown with team members
+    fetch("fetch_data.php?action=list_names")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Team names data:", data);
+            
+            if (!Array.isArray(data)) {
+                throw new Error("Expected array but got: " + typeof data);
+            }
+            
+            data.forEach(name => {
+                const option = document.createElement("option");
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+            
+            console.log("Dropdown populated with", data.length, "names");
+        })
+        .catch(error => {
+            console.error("Error loading team names:", error);
+            const errorOption = document.createElement("option");
+            errorOption.value = "";
+            errorOption.textContent = "Error loading supervisors";
+            errorOption.disabled = true;
+            select.appendChild(errorOption);
+        });
+
+    // On dropdown change, fetch data
+    select.addEventListener("change", function () {
+        const selectedName = select.value;
+        console.log("Selected supervisor:", selectedName);
+        
+        tbody.innerHTML = "";
+        updateCSVButton(selectedName);
+        
+        if (!selectedName) {
+            console.log("No supervisor selected");
+            return;
+        }
+
+        // Show loading row
+        const loadingRow = document.createElement("tr");
+        const loadingCell = document.createElement("td");
+        loadingCell.colSpan = 8;
+        loadingCell.textContent = "Loading...";
+        loadingCell.style.textAlign = "center";
+        loadingRow.appendChild(loadingCell);
+        tbody.appendChild(loadingRow);
+
+        console.log("Fetching data for supervisor:", selectedName);
+
+        fetch(`fetch_data.php?action=filter&name=${encodeURIComponent(selectedName)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Employee data:", data);
+                tbody.innerHTML = ""; // Clear loading row
+
+                if (!Array.isArray(data)) {
+                    throw new Error("Expected array but got: " + typeof data);
+                }
+
+                if (data.length === 0) {
+                    const tr = document.createElement("tr");
+                    const td = document.createElement("td");
+                    td.colSpan = 8;
+                    td.textContent = "No team members found for the selected supervisor.";
+                    td.style.textAlign = "center";
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                    return;
+                }
+
+                data.forEach((row, index) => {
+                    const tr = document.createElement("tr");
+                    
+                    const cellValues = [
+                        row.EDS || '',
+                        row.FULLNAME || '',
+                        row.PROJECT || '',
+                        row.POSITION || '',
+                        row.SITE || '',
+                        row.SUPERVISOR || '',
+                        row.emp_status || '',
+                        row.DATEHIRED || ''
+                    ];
+                    
+                    cellValues.forEach(cellValue => {
+                        const td = document.createElement("td");
+                        td.textContent = cellValue;
+                        tr.appendChild(td);
+                    });
+                    
+                    tbody.appendChild(tr);
+                });
+                
+                console.log("Table populated with", data.length, "rows");
+            })
+            .catch(error => {
+                console.error("Error fetching employee data:", error);
+                tbody.innerHTML = "";
+                const errorRow = document.createElement("tr");
+                const errorCell = document.createElement("td");
+                errorCell.colSpan = 8;
+                errorCell.textContent = "Error loading data. Please try again.";
+                errorCell.style.textAlign = "center";
+                errorCell.style.color = "red";
+                errorRow.appendChild(errorCell);
+                tbody.appendChild(errorRow);
+            });
+    });
+    
+    // Create CSV export button
+    function createCSVExportButton() {
+    // Check if button already exists
+    if (document.getElementById('csvExportBtn')) {
+        return;
+    }
+    
+    // Find the table or create container
+    const table = document.getElementById('team-table');
+    if (!table) return;
+    
+    // Create enhanced button container with better styling
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'export-button-container mb-4';
+    buttonContainer.innerHTML = `
+        <div class="d-flex justify-content-end align-items-center gap-3">
+            <div class="export-info d-none" id="exportInfo">
+                <small class="text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    Ready to export data
+                </small>
+            </div>
+            <button type="button" id="csvExportBtn" class="btn-export-csv" disabled>
+                <div class="btn-content">
+                    <div class="btn-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="btn-text">
+                        <span class="btn-main-text">Export CSV</span>
+                        <span class="btn-sub-text">Download team data</span>
+                    </div>
+                </div>
+                <div class="btn-loading d-none">
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    `;
+    
+    // Add enhanced CSS styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .export-button-container {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-export-csv {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 0;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+        }
+        
+        .btn-export-csv:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+        
+        .btn-export-csv:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-export-csv:disabled {
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+        }
+        
+        .btn-icon {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-export-csv:hover:not(:disabled) .btn-icon {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+        
+        .btn-main-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .btn-sub-text {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .btn-loading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .export-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            color: #059669;
+            font-size: 0.875rem;
+        }
+        
+        .export-info i {
+            font-size: 0.75rem;
+        }
+        
+        /* Pulse animation for active state */
+        .btn-export-csv:not(:disabled) .btn-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .export-button-container {
+                padding: 1rem;
+            }
+            
+            .btn-export-csv {
+                min-width: 160px;
+            }
+            
+            .btn-content {
+                padding: 0.75rem 1.25rem;
+                gap: 0.5rem;
+            }
+            
+            .btn-main-text {
+                font-size: 0.875rem;
+            }
+            
+            .btn-sub-text {
+                font-size: 0.7rem;
+            }
+        }
+    `;
+    
+    // Add styles to document
+    document.head.appendChild(style);
+    
+    // Insert before the table
+    table.parentNode.insertBefore(buttonContainer, table);
+    
+    // Add click event with loading state
+    const csvBtn = document.getElementById('csvExportBtn');
+    csvBtn.addEventListener('click', async () => {
+        const btnContent = csvBtn.querySelector('.btn-content');
+        const btnLoading = csvBtn.querySelector('.btn-loading');
+        
+        // Show loading state
+        btnContent.classList.add('d-none');
+        btnLoading.classList.remove('d-none');
+        csvBtn.disabled = true;
+        
+        try {
+            // Add small delay for better UX
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Perform export
+            exportToCSV();
+            
+            // Show success feedback
+            showExportSuccess();
+            
+        } catch (error) {
+            console.error('Export failed:', error);
+            showExportError();
+        } finally {
+            // Reset button state
+            setTimeout(() => {
+                btnContent.classList.remove('d-none');
+                btnLoading.classList.add('d-none');
+                csvBtn.disabled = false;
+            }, 1000);
+        }
+    });
+}
+
+// Enhanced update CSV button state
+function updateCSVButton(selectedName) {
+    const csvBtn = document.getElementById('csvExportBtn');
+    const exportInfo = document.getElementById('exportInfo');
+    
+    if (!csvBtn) return;
+    
+    if (selectedName) {
+        csvBtn.disabled = false;
+        
+        // Update button text
+        const mainText = csvBtn.querySelector('.btn-main-text');
+        const subText = csvBtn.querySelector('.btn-sub-text');
+        
+        if (mainText) mainText.textContent = `Export CSV`;
+        if (subText) subText.textContent = `${selectedName}'s team data`;
+        
+        // Show export info
+        if (exportInfo) {
+            exportInfo.classList.remove('d-none');
+            exportInfo.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                Ready to export data for <strong>${selectedName}</strong>
+            `;
+        }
+        
+        // Add success pulse animation
+        csvBtn.style.animation = 'pulse-green 1s ease-in-out';
+        setTimeout(() => {
+            csvBtn.style.animation = '';
+        }, 1000);
+        
+    } else {
+        csvBtn.disabled = true;
+        
+        // Reset button text
+        const mainText = csvBtn.querySelector('.btn-main-text');
+        const subText = csvBtn.querySelector('.btn-sub-text');
+        
+        if (mainText) mainText.textContent = 'Export CSV';
+        if (subText) subText.textContent = 'Select supervisor first';
+        
+        // Hide export info
+        if (exportInfo) {
+            exportInfo.classList.add('d-none');
+        }
+    }
+}
+
+// Show export success feedback
+function showExportSuccess() {
+    const exportInfo = document.getElementById('exportInfo');
+    if (exportInfo) {
+        exportInfo.innerHTML = `
+            <i class="fas fa-check-circle text-success"></i>
+            <span class="text-success">Export completed successfully!</span>
+        `;
+        exportInfo.style.background = 'rgba(16, 185, 129, 0.1)';
+        exportInfo.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+            const selectedName = document.getElementById("teamSelect").value;
+            if (selectedName) {
+                exportInfo.innerHTML = `
+                    <i class="fas fa-info-circle"></i>
+                    Ready to export data for <strong>${selectedName}</strong>
+                `;
+                exportInfo.style.background = 'rgba(16, 185, 129, 0.1)';
+                exportInfo.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+            }
+        }, 3000);
+    }
+}
+
+// Show export error feedback
+function showExportError() {
+    const exportInfo = document.getElementById('exportInfo');
+    if (exportInfo) {
+        exportInfo.innerHTML = `
+            <i class="fas fa-exclamation-triangle text-danger"></i>
+            <span class="text-danger">Export failed. Please try again.</span>
+        `;
+        exportInfo.style.background = 'rgba(239, 68, 68, 0.1)';
+        exportInfo.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+            const selectedName = document.getElementById("teamSelect").value;
+            if (selectedName) {
+                exportInfo.innerHTML = `
+                    <i class="fas fa-info-circle"></i>
+                    Ready to export data for <strong>${selectedName}</strong>
+                `;
+                exportInfo.style.background = 'rgba(16, 185, 129, 0.1)';
+                exportInfo.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+            }
+        }, 3000);
+    }
+}
+
+// Enhanced export to CSV function (same as before but with better feedback)
+function exportToCSV() {
+    const selectedName = document.getElementById("teamSelect").value;
+    if (!selectedName) return;
+    
+    const table = document.getElementById('team-table');
+    if (!table) return;
+    
+    let csv = [];
+    const rows = table.querySelectorAll('tr');
+    
+    // Add headers
+    const headers = table.querySelectorAll('thead th');
+    if (headers.length > 0) {
+        const headerRow = [];
+        headers.forEach(header => {
+            let text = header.textContent.trim().replace(/"/g, '""');
+            headerRow.push('"' + text + '"');
+        });
+        csv.push(headerRow.join(','));
+    }
+    
+    // Add data rows (only tbody rows)
+    const dataRows = table.querySelectorAll('tbody tr');
+    dataRows.forEach(row => {
+        const cols = row.querySelectorAll('td');
+        if (cols.length > 0) {
+            const rowData = [];
+            cols.forEach(col => {
+                let text = col.textContent.trim().replace(/"/g, '""');
+                rowData.push('"' + text + '"');
+            });
+            csv.push(rowData.join(','));
+        }
+    });
+    
+    // Create and download CSV file
+    const csvContent = csv.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    
+    if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `team_members_${selectedName}_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+    console.log("Team member view initialization complete");
+}
+
+// Make sure to call this function when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initTeamMemberView();
+});
+
+
+
 
 function initBpsDashboardCharts() {
     if (!document.querySelector("#chart1")) return;

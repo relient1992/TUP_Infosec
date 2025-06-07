@@ -10,18 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$servername = "10.200.168.89";
-$username   = "supersu";
-$password   = "H110mds2!";
-$database   = "database_rda";
-$charset = "utf8mb4";
+// $servername = "10.200.168.89";
+// $username   = "supersu";
+// $password   = "H110mds2!";
+// $database   = "database_rda";
+// $charset = "utf8mb4";
 
 // Database connection
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $database = "businessdb";
-// $charset = "utf8mb4";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "businessdb";
+$charset = "utf8mb4";
 
 $dsn = "mysql:host=$servername;dbname=$database;charset=$charset";
 $options = [
@@ -72,7 +72,7 @@ $insert->execute([$employee_id, $hashed_password]);
 
 // Insert default role into user_roles
 $insertRole = $pdo->prepare("INSERT INTO user_roles (employee_id, role_id) VALUES (?, ?)");
-$insertRole->execute([$employee_id, 4]);
+$insertRole->execute([$employee_id, 2]);
 
 echo json_encode([
     'status' => 'success',

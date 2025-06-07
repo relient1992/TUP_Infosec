@@ -149,6 +149,8 @@ if (!isset($_SESSION['employee_id'])) {
 
         <main id="main-content">
 
+        
+
             <div id="app"></div>
             
             
@@ -190,6 +192,7 @@ if (!isset($_SESSION['employee_id'])) {
 
     </div>
 
+    
     <script src="js/fetch_data.js"></script>
     <script src="js/employee_updates.js"></script>
     <script src="js/project_employees.js"></script>
@@ -197,6 +200,8 @@ if (!isset($_SESSION['employee_id'])) {
     <script src="js/router.js"></script>
     <script src="js/sidebartoggle.js"></script>
     <script src="js/role_access.js"></script>
+    <script src="js/export-functions.js"></script>
+    <script src="js/team_member.js"></script>
     
 
     
