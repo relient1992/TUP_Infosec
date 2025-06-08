@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "bps_dashboard.html",
             "lhi_absenteeism.html",
             "project_efficiency.html",
-            "team_member.html"
+            "team_member.html",
+            "quality_scores.html"
         ],
         Manager: [
             "active_attrition.html",
@@ -25,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "lhi_bfp.html",
             "lhi_dashboard.html",
             "bu_bps.html",
-            "bu_lhi.html"
+            "bu_lhi.html",
+            "quality_scores.html"
 
         ],
         User: [
@@ -34,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "bps_attendance_db.html",
             "bps_bfp.html",
             "bps_dashboard.html",
-            "team_member.html"
+            "team_member.html",
+            "quality_scores.html"
         ]
     };
 

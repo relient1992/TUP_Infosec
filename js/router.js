@@ -17,7 +17,8 @@ const rolePages = {
         "lhi_bfp.html",
         "lhi_dashboard.html",
         "bu_bps.html",
-        "bu_lhi.html"
+        "bu_lhi.html",
+        "quality_scores.html"
     ],
     'Admin': [
         "active_attrition.html",
@@ -27,7 +28,8 @@ const rolePages = {
         "bps_dashboard.html",
         "lhi_absenteeism.html",
         "project_efficiency.html",
-        "team_member.html"
+        "team_member.html",
+        "quality_scores.html"
     ],
     'User': [
         "active_attrition.html",
@@ -35,7 +37,8 @@ const rolePages = {
         "bps_absenteeism.html",
         "bps_attendance_db.html",
         "bps_bfp.html",
-        "bps_dashboard.html"
+        "bps_dashboard.html",
+        "quality_scores.html"
 
     ]
 };
@@ -156,25 +159,46 @@ function initializeRouter() {
             history.pushState(null, "", `#${viewKey}`);
         });
     });
+}
 
-    // Flatpickr setup
-    if (document.getElementById("dateRange")) {
+function initializeDatePicker() {
+    const dateRangeElement = document.getElementById("dateRange");
+    if (dateRangeElement) {
         flatpickr("#dateRange", {
             mode: "range",
             dateFormat: "Y-m-d",
+            defaultDate: [new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-01", new Date()], // Default to current month
             onChange: function(selectedDates) {
                 if (selectedDates.length === 2) {
-                    const start = selectedDates[0].getTime();
-                    const end = selectedDates[1].getTime();
-
-                    [chart1Instance, chart2Instance, chart3Instance, chart4Instance].forEach(chart => {
-                        if (chart && typeof chart.updateOptions === 'function') {
-                            chart.updateOptions({ xaxis: { min: start, max: end } });
-                        }
-                    });
+                    const startDate = selectedDates[0].toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                    const endDate = selectedDates[1].toISOString().split('T')[0];
+                    
+                    // Fetch new data and update chart
+                    fetchChartData(startDate, endDate);
                 }
             }
         });
+    }
+}
+
+async function fetchChartData(startDate, endDate) {
+    try {
+        const response = await fetch(`fetch_data.php?action=chart_data&start_date=${startDate}&end_date=${endDate}`);
+        const result = await response.json();
+        
+        if (result.success && chart1Instance) {
+            // Update chart with new data
+            chart1Instance.updateOptions({
+                series: result.data.series,
+                xaxis: {
+                    categories: result.data.categories
+                }
+            });
+        } else {
+            console.error('Failed to fetch chart data:', result.error);
+        }
+    } catch (error) {
+        console.error('Error fetching chart data:', error);
     }
 }
 
@@ -279,6 +303,8 @@ function loadView(viewName) {
             // Initialize view-specific scripts after content is loaded and loading screen is handled
             initializeViewScripts(viewName);
         });
+
+
 }
 
 
@@ -290,6 +316,10 @@ function initializeViewScripts(viewName) {
     } else if (viewName === "team_member") {
         initTeamMemberView();
     }
+
+    setTimeout(() => {
+        initializeDatePicker();
+    }, 100);
 }
 
 function initActiveAttritionView() {
@@ -866,26 +896,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function initBpsDashboardCharts() {
-    if (!document.querySelector("#chart1")) return;
+async function initBpsDashboardCharts() {
+     if (!document.querySelector("#chart1")) return;
 
     const rootstyles = getComputedStyle(document.documentElement);
     const fontColor = rootstyles.getPropertyValue('--color-dark').trim();
 
-    // Chart 1 (Area)
+    // Initial chart options with empty data
     const options1 = {
-        series: [{ name: 'series1', data: [31, 40, 28, 51, 42, 109, 100] }, { name: 'series2', data: [11, 32, 45, 32, 34, 52, 41] }],
+        series: [], // Will be populated by fetchChartData
         chart: { type: 'area', height: 300, width: '100%', foreColor: fontColor },
-        dataLabels: { enabled: false }, stroke: { curve: 'smooth' },
+        dataLabels: { enabled: false }, 
+        stroke: { curve: 'smooth' },
         xaxis: {
-            type: 'datetime', categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"],
-            labels: { style: { colors: fontColor } }, axisBorder: { show: true, color: fontColor }, axisTicks: { show: true, color: fontColor }, title: { style: { color: fontColor } }
+            type: 'datetime', 
+            categories: [], // Will be populated by fetchChartData
+            labels: { style: { colors: fontColor } }, 
+            axisBorder: { show: true, color: fontColor }, 
+            axisTicks: { show: true, color: fontColor }, 
+            title: { style: { color: fontColor } }
         },
-        yaxis: { labels: { style: { colors: fontColor } }, title: { style: { color: fontColor } } },
-        tooltip: { x: { format: 'dd/MM/yy HH:mm' } }, responsive: [{ breakpoint: 480, options: { chart: { height: 200 } } }]
+        yaxis: { 
+            labels: { style: { colors: fontColor } }, 
+            title: { style: { color: fontColor } } 
+        },
+        tooltip: { x: { format: 'dd/MM/yy' } }, 
+        responsive: [{ breakpoint: 480, options: { chart: { height: 200 } } }]
     };
+    
     chart1Instance = new ApexCharts(document.querySelector("#chart1"), options1);
     chart1Instance.render();
+    
+    // Fetch initial data (current month by default)
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startDate = firstDay.toISOString().split('T')[0];
+    const endDate = today.toISOString().split('T')[0];
+    
+    await fetchChartData(startDate, endDate);
 
     // Chart 2
     const options2 = {

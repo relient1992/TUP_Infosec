@@ -38,8 +38,3 @@ function fetchEmployeeUpdate(entity = 'ALL', startDate = null, endDate = null) {
         })
         .catch(error => console.error("Error fetching employee updates:", error));
 }
-
-// // Example usage on page load
-// window.addEventListener("DOMContentLoaded", () => {
-//     fetchEmployeeUpdate('LHI', '2025-01-01', '2025-05-15'); // Change as needed
-// });

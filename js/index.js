@@ -21,13 +21,3 @@ themeToggler.addEventListener('click', () => {
     });
 });
 
-// project_employee.forEach(projectemployee => {
-//     const tr = document.createElement('tr');
-//     const trContent = `
-//         <td>${projectemployee.PROJECT}</td>
-//         <td>${projectemployee.EMPLOYEECOUNT}</td>
-//         <td>${projectemployee.SITE}</td>
-//     `;
-//     tr.innerHTML = trContent;
-//     document.querySelector('.employee-count table tbody').appendChild(tr);
-// });

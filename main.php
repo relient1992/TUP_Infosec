@@ -56,7 +56,7 @@ if (!isset($_SESSION['employee_id'])) {
                 </a>
 
                 <a href="#" data-view="team_member">
-                    <span class="material-icons-sharp">supervisor_account</span>
+                    <span class="material-icons-sharp">supervised_user_circle</span>
                     <h3>Team Member</h3>
                 </a>
 
@@ -73,6 +73,11 @@ if (!isset($_SESSION['employee_id'])) {
                 <a href="#" data-view="project_efficiency">
                     <span class="material-icons-sharp">query_stats</span>
                     <h3>Project Efficiency</h3>
+                </a>
+
+                <a href="#" data-view="quality_scores">
+                    <span class="material-icons-sharp">grading</span>
+                    <h3>Quality Scores</h3>
                 </a>
 
                 <div class="dropdown">
@@ -114,7 +119,7 @@ if (!isset($_SESSION['employee_id'])) {
 
                 <div class="dropdown">
                     <a href="#" class="parent">
-                        <span class="material-icons-sharp">calendar_month</span>
+                        <span class="material-icons-sharp">query_stats</span>
                         <h3>BU Review</h3>
                         <span class="dropdown-indicator">&#9662;</span>
                     </a>
