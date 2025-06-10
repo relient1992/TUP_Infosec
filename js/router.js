@@ -540,8 +540,7 @@ function initTeamMemberView() {
                     </div>
                 </div>
                 <div class="btn-loading d-none">
-                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                    <span></span>
+                    
                 </div>
             </button>
         </div>
@@ -555,7 +554,7 @@ function initTeamMemberView() {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 12px;
             border: 1px solid #e2e8f0;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
@@ -637,7 +636,7 @@ function initTeamMemberView() {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.875rem 1.5rem;
+            //padding: 0.875rem 1.5rem;
             font-size: 0.875rem;
         }
         

@@ -1,19 +1,19 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "businessdb";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "businessdb";
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// $servername = "10.200.168.89";
-// $username   = "supersu";
-// $password   = "H110mds2!";
-// $database   = "database_rda";
+$servername = "10.200.168.89";
+$username   = "supersu";
+$password   = "H110mds2!";
+$database   = "database_rda";
 
 // Connect
 $conn = new mysqli($servername, $username, $password, $database);
@@ -126,7 +126,15 @@ if (isset($_GET['action'])) {
 
     // 🔁 List all unique supervisors for the dropdown
     if ($action === 'list_names') {
-        $result = $conn->query("SELECT DISTINCT SUPERVISOR FROM employee_listings WHERE SUPERVISOR != '' ORDER BY SUPERVISOR ASC");
+        $result = $conn->query("SELECT DISTINCT SUPERVISOR 
+                FROM employee_listings 
+                WHERE SUPERVISOR != '' 
+                AND SUPERVISOR IN (
+                    SELECT FULLNAME 
+                    FROM employee_listings 
+                    WHERE emp_status = 'ACTIVE') 
+                ORDER BY SUPERVISOR ASC
+            ");
         $supervisors = [];
         while ($row = $result->fetch_assoc()) {
             $supervisors[] = $row['SUPERVISOR'];
