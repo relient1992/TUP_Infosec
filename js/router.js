@@ -18,7 +18,9 @@ const rolePages = {
         "lhi_dashboard.html",
         "bu_bps.html",
         "bu_lhi.html",
-        "quality_scores.html"
+        "quality_scores.html",
+        "lhi_scorecard.html",
+        "lhi_weekly_efficiency.html"
     ],
     'Admin': [
         "active_attrition.html",
@@ -29,7 +31,9 @@ const rolePages = {
         "lhi_absenteeism.html",
         "project_efficiency.html",
         "team_member.html",
-        "quality_scores.html"
+        "quality_scores.html",
+        "lhi_scorecard.html",
+        "lhi_weekly_efficiency.html"
     ],
     'User': [
         "active_attrition.html",

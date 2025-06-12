@@ -60,25 +60,41 @@ if (!isset($_SESSION['employee_id'])) {
                     <h3>Team Member</h3>
                 </a>
 
-                <a href="#" data-view="bps_dashboard">
+                <!-- <a href="#" data-view="bps_dashboard">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>BPS Dashboard</h3>
-                </a>
+                </a> -->
 
-                <a href="#" data-view="bps_bfp">
+                <!-- <a href="#" data-view="bps_bfp">
                     <span class="material-icons-sharp">money</span>
                     <h3>BPS BFP</h3>
-                </a>
+                </a> -->
 
-                <a href="#" data-view="project_efficiency">
+                <div class="dropdown">
+                    <a href="#" class="parent">
+                        <span class="material-icons-sharp">money</span>
+                        <h3>BPS Production Reports</h3>
+                        <span class="dropdown-indicator">&#9662;</span>
+                    </a>
+                    <div class="child-dropdown">
+                        <a href="#" data-view="bps_dashboard"><h3>BPS Dashboard</h3></a>
+                        <a href="#" data-view="bps_bfp"><h3>BPS BFP</h3></a>
+                        <a href="#" data-view="project_efficiency"><h3>Project Efficiency</h3></a>
+                        <a href="#" data-view="quality_scores"><h3>Quality Scores</h3></a>
+                    </div>
+                </div>
+
+
+
+                <!-- <a href="#" data-view="project_efficiency">
                     <span class="material-icons-sharp">query_stats</span>
                     <h3>Project Efficiency</h3>
-                </a>
+                </a> -->
 
-                <a href="#" data-view="quality_scores">
+                <!-- <a href="#" data-view="quality_scores">
                     <span class="material-icons-sharp">grading</span>
                     <h3>Quality Scores</h3>
-                </a>
+                </a> -->
 
                 <div class="dropdown">
                     <a href="#" class="parent">
@@ -95,7 +111,21 @@ if (!isset($_SESSION['employee_id'])) {
 
                 <hr class="menu-divider">
 
-                <a href="#" data-view="lhi_dashboard">
+                <div class="dropdown">
+                    <a href="#" class="parent">
+                        <span class="material-icons-sharp">grid_view</span>
+                        <h3>LHI Production Reports</h3>
+                        <span class="dropdown-indicator">&#9662;</span>
+                    </a>
+                    <div class="child-dropdown">
+                        <a href="#" data-view="lhi_dashboard"><h3>LHI Dashboard</h3></a>
+                        <a href="#" data-view="lhi_bfp"><h3>LHI BFP</h3></a>
+                        <a href="#" data-view="lhi_weekly_efficiency"><h3>LHI Weekly Efficiency</h3></a>
+                        <a href="#" data-view="lhi_scorecard"><h3>LHI Scorecard</h3></a>
+                    </div>
+                </div>
+
+                <!-- <a href="#" data-view="lhi_dashboard">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>LHI Dashboard</h3>
                 </a>
@@ -103,7 +133,7 @@ if (!isset($_SESSION['employee_id'])) {
                 <a href="#" data-view="lhi_bfp">
                     <span class="material-icons-sharp">money</span>
                     <h3>LHI BFP</h3>
-                </a>
+                </a> -->
 
                 <hr class="menu-divider">
 
@@ -120,7 +150,7 @@ if (!isset($_SESSION['employee_id'])) {
                 <div class="dropdown">
                     <a href="#" class="parent">
                         <span class="material-icons-sharp">query_stats</span>
-                        <h3>BU Review</h3>
+                        <h3>BU Review Reports</h3>
                         <span class="dropdown-indicator">&#9662;</span>
                     </a>
                     <div class="child-dropdown">
