@@ -338,6 +338,20 @@ main .apply {
 
 }
 
+main .apply-active-attrition {
+    display: inline-block;
+    margin-left: 1rem;
+    appearance: none; /* remove default arrow */
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.2rem 1rem;
+    outline: none;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+
+}
+
 main .apply button{
     border: none;
     background-color: transparent;
@@ -351,6 +365,14 @@ main .apply button{
     display: block;
     color: white;
 }
+
+#active-attrition-btn {
+    text-align: center;
+    display: block;
+    color: #059669;
+    
+}
+
 
 
 main .entity{
@@ -856,3 +878,4 @@ main table tbody td:hover,
     text-decoration: none;
     color: #1a73e8;
   }
+

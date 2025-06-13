@@ -36,12 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
         User: [
             "active_attrition.html",
+            "team_member.html",
             "bps_absenteeism.html",
             "bps_attendance_db.html",
-            "bps_bfp.html",
+            // "bps_bfp.html",
             "bps_dashboard.html",
-            "team_member.html",
-            "quality_scores.html"
+            "quality_scores.html",
+            "lhi_absenteeism.html",
+            "project_efficiency.html",
+            "lhi_scorecard.html",
+            "lhi_dashboard.html",
         ]
     };
 

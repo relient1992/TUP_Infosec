@@ -1,28 +1,42 @@
 <h1>Active & Attrition Dashboard</h1>
 
-    <div class="date-range">
-      <div class="date">
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date" name="start-date">
-      </div>
-      <div class="date">
-        <label for="end-date">End Date:</label>
-        <input type="date" id="end-date" name="end-date">
-      </div>
-    </div>
+    <div class="top-bar">
+      <div class="filters">
+        <div class="date-range">
+          <div class="date">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date">
+          </div>
+          <div class="date">
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date">
+          </div>
+        </div>
 
-    <div class="entity">
-      <label for="entity-select">Choose Entity:</label>
-      <select id="entity-select" class="entity">
-        <!-- <option value="">--Select--</option> -->
-        <option value="ALL">ALL</option>
-        <option value="LHI">LHI</option>
-        <option value="BPS">BPS</option>
-      </select>
-    </div>
+        <div class="entity">
+          <label for="entity-select">Choose Entity:</label>
+          <select id="entity-select" class="entity">
+            <option value="ALL">ALL</option>
+            <option value="LHI">LHI</option>
+            <option value="BPS">BPS</option>
+          </select>
+        </div>
 
-    <div class="apply">
-      <button id="apply-btn">Apply</button>
+        <div class="apply">
+            <button id="apply-btn">Apply</button>
+        </div>
+
+        <div class="apply-active-attrition">
+          <a href="https://drive.google.com/drive/folders/12LWiZCju-8_5JO-xm1E4QL5X4bgbBErk?usp=drive_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="active-attrition-btn"
+            class="google-link">
+            Active and Attrition link
+          </a>
+        </div>
+
+      </div>
     </div>
 
     <div class="main-layout">
@@ -83,7 +97,7 @@
               <!-- Fetched Data Here -->
             </tbody>
           </table>
-          <a href="#">Show ALL</a>
+          <!-- <a href="#">Show ALL</a> -->
         </div>
       </div>
 
