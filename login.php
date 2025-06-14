@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-$servername = "10.200.168.89";
-$username   = "supersu";
-$password   = "H110mds2!";
-$database   = "database_rda";
+// $servername = "10.200.168.89";
+// $username   = "supersu";
+// $password   = "H110mds2!";
+// $database   = "database_rda";
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $database = "businessdb";
-// $charset = "utf8mb4";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "businessdb";
+$charset = "utf8mb4";
 
 $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
@@ -52,7 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 1 => 'Super User',
                 2 => 'Manager',
                 3 => 'Admin',
-                4 => 'User'
+                4 => 'User',
+                5 => 'lhi_admin',
+                6 => 'lhi_manager',
+                7 => 'lhi_user',
+                8 => 'bps_admin',
+                9 => 'bps_manager',
+                10 => 'bps_user'
             ];
             $roleName = $roleMap[$user['role_id']] ?? 'User';
             $_SESSION['user_role'] = $roleName;

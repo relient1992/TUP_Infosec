@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const USER_ROLE = sessionStorage.getItem("user_role"); // assuming this is set after login
+    const USER_ROLE = sessionStorage.getItem("user_role");
     const allowedPagesByRole = {
         Admin: [
             "active_attrition.html",
@@ -37,16 +37,71 @@ document.addEventListener("DOMContentLoaded", () => {
         User: [
             "active_attrition.html",
             "team_member.html",
-            "bps_absenteeism.html",
-            "bps_attendance_db.html",
-            // "bps_bfp.html",
-            "bps_dashboard.html",
-            "quality_scores.html",
+
+        ],
+        lhi_admin: [
+            "active_attrition.html",
+            "team_member.html",
             "lhi_absenteeism.html",
-            "project_efficiency.html",
             "lhi_scorecard.html",
             "lhi_dashboard.html",
-        ]
+            "lhi_weekly_efficiency.html",
+            "lhi_bfp.html"
+        ],
+        lhi_manager: [
+            "active_attrition.html",
+            "team_member.html",
+            "lhi_absenteeism.html",
+            "lhi_scorecard.html",
+            "lhi_dashboard.html",
+            "lhi_weekly_efficiency.html",
+            "lhi_bfp.html",
+            "lhi_financial.html",
+            "bu_lhi.html"
+        ], 
+        lhi_user: [
+            "active_attrition.html",
+            "team_member.html",
+            "lhi_absenteeism.html",
+            "lhi_scorecard.html",
+            "lhi_dashboard.html",
+            "lhi_weekly_efficiency.html"
+            
+        ],
+        bps_admin: [
+            "active_attrition.html",
+            "bps_absenteeism.html",
+            "bps_attendance_db.html",
+            "bps_bfp.html",
+            "bps_dashboard.html",
+            "project_efficiency.html",
+            "team_member.html",
+            "quality_scores.html",
+
+        ],
+        bps_manager: [
+            "active_attrition.html",
+            "bps_absenteeism.html",
+            "bps_attendance_db.html",
+            "bps_bfp.html",
+            "bps_dashboard.html",
+            "project_efficiency.html",
+            "team_member.html",
+            "bps_financial.html",
+            "bu_bps.html",
+            "quality_scores.html",
+
+        ],
+        bps_user: [
+            "active_attrition.html",
+            "bps_absenteeism.html",
+            "bps_attendance_db.html",
+            "bps_dashboard.html",
+            "project_efficiency.html",
+            "team_member.html",
+            "quality_scores.html",
+        ]           
+        
     };
 
     const userAllowedPages = allowedPagesByRole[USER_ROLE] || [];
