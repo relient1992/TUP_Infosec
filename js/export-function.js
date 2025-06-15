@@ -1,12 +1,3 @@
-/**
- * Export Functions Module
- * Handles CSV and Excel export functionality for tables
- * File: export-functions.js
- */
-
-// Export module object to avoid global namespace pollution
-
-
 const ExportManager = {
     
     // Configuration
@@ -21,11 +12,7 @@ const ExportManager = {
     init(customConfig = {}) {
         // Merge custom config with defaults
         this.config = { ...this.config, ...customConfig };
-        
-        // Add styles
         this.addStyles();
-        
-        // Add export buttons
         this.addButtons();
         
         console.log('Export Manager initialized');
@@ -144,11 +131,10 @@ const ExportManager = {
         const button = document.getElementById('exportAllBtn');
         const originalText = button.innerHTML;
         
-        // Show loading state
+
         button.innerHTML = '⏳ Exporting...';
         button.disabled = true;
 
-        // Fetch all data
         fetch(`${this.config.fetchUrl}?action=export_all`)
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -288,7 +274,7 @@ const ExportManager = {
     },
 
     addStyles() {
-        // Prevent duplicate styles
+        
         if (document.getElementById('export-styles')) return;
 
         const style = document.createElement('style');
@@ -359,7 +345,6 @@ const ExportManager = {
     }
 };
 
-// Legacy function for backward compatibility
 function addExportButtons() {
     ExportManager.init();
 }

@@ -1,4 +1,3 @@
-// Handle parent click to toggle dropdown
 document.querySelectorAll('.sidebar .dropdown > .parent').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();

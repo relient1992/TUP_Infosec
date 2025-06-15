@@ -5,7 +5,7 @@ function fetchProjectEmployeeSummary() {
             const projectEmployeeList = data.PROJECT_EMPLOYEE_SUMMARY || [];
 
             const tbody = document.querySelector('.employee-count table tbody');
-            tbody.innerHTML = ''; // Clear previous rows
+            tbody.innerHTML = ''; 
 
             projectEmployeeList.forEach(item => {
                 const tr = document.createElement('tr');
@@ -21,5 +21,5 @@ function fetchProjectEmployeeSummary() {
         .catch(error => console.error("Error fetching project employee summary:", error));
 }
 
-// Call it when the DOM is fully loaded
+
 window.addEventListener("DOMContentLoaded", fetchProjectEmployeeSummary);

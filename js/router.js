@@ -274,8 +274,6 @@ async function fetchChartData(startDate, endDate) {
 }
 
 function loadView(viewName) {
-    // If the requested view is 'log_out', stop immediately.
-    // The logout process is handled by a separate click listener, not by loading a view.
     if (viewName === 'log_out') {
         return;
     }
@@ -296,8 +294,8 @@ function loadView(viewName) {
         }
     }
 
-    let showLoadingScreen = false; // Flag to determine if loading screen should be shown
-    let loadingPromise = Promise.resolve(); // Default promise, resolves immediately
+    let showLoadingScreen = false; 
+    let loadingPromise = Promise.resolve(); 
 
     fetch(`views/${viewName}.html`)
         .then(res => {
@@ -307,21 +305,21 @@ function loadView(viewName) {
             return res.text();
         })
         .then(html => {
-            // Create a temporary element to check for an iframe without altering the DOM yet
+            
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
             const iframe = tempDiv.querySelector('iframe');
 
             if (iframe && loadingScreen) {
-                showLoadingScreen = true; // Set flag if iframe found and loadingScreen element exists
+                showLoadingScreen = true; 
                 loadingScreen.style.opacity = '1'; // Make loading screen visible
                 loadingScreen.style.display = 'flex';
 
                 loadingPromise = new Promise(resolve => {
-                    // Set a timeout to resolve the promise even if the iframe fails to load (e.g., cross-origin issues)
+                    
                     const iframeLoadTimeout = setTimeout(() => {
                         resolve();
-                    }, 10000); // 10 seconds timeout for iframe load
+                    }, 5000);  
 
                     iframe.onload = () => {
                         clearTimeout(iframeLoadTimeout);
@@ -337,11 +335,11 @@ function loadView(viewName) {
             // Insert the new HTML into the main content area
             mainContent.innerHTML = html;
 
-            // Wait for the loading promise (if an iframe was detected) before hiding the loading screen
+            
             return loadingPromise.then(() => {
                 if (showLoadingScreen && loadingScreen) {
                     const viewLoadStartTime = Date.now();
-                    const minLoadDisplayTime = 2000; // Minimum 2 seconds display for views with iframes
+                    const minLoadDisplayTime = 2000; 
 
                     const timeElapsed = Date.now() - viewLoadStartTime;
                     const remainingTime = Math.max(0, minLoadDisplayTime - timeElapsed);
@@ -352,11 +350,11 @@ function loadView(viewName) {
                             setTimeout(() => {
                                 loadingScreen.style.display = 'none';
                                 resolve();
-                            }, 500); // Matches CSS transition duration
-                        }, remainingTime); // Wait for the remaining time to meet the minimum display time
+                            }, 500); 
+                        }, remainingTime); 
                     });
                 } else {
-                    // If no loading screen was shown (no iframe) or no loadingScreen element, resolve immediately
+                    
                     return Promise.resolve();
                 }
             });
@@ -371,7 +369,7 @@ function loadView(viewName) {
             }
         })
         .finally(() => {
-            // Initialize view-specific scripts after content is loaded and loading screen is handled
+
             initializeViewScripts(viewName);
         });
 
@@ -580,7 +578,7 @@ function initTeamMemberView() {
     
     // Create CSV export button
     function createCSVExportButton() {
-    // Check if button already exists
+    
     if (document.getElementById('csvExportBtn')) {
         return;
     }
@@ -762,31 +760,31 @@ function initTeamMemberView() {
         }
     `;
     
-    // Add styles to document
+   
     document.head.appendChild(style);
     
-    // Insert before the table
+    
     table.parentNode.insertBefore(buttonContainer, table);
     
-    // Add click event with loading state
+    
     const csvBtn = document.getElementById('csvExportBtn');
     csvBtn.addEventListener('click', async () => {
         const btnContent = csvBtn.querySelector('.btn-content');
         const btnLoading = csvBtn.querySelector('.btn-loading');
         
-        // Show loading state
+        
         btnContent.classList.add('d-none');
         btnLoading.classList.remove('d-none');
         csvBtn.disabled = true;
         
         try {
-            // Add small delay for better UX
+            
             await new Promise(resolve => setTimeout(resolve, 500));
             
-            // Perform export
+            
             exportToCSV();
             
-            // Show success feedback
+            
             showExportSuccess();
             
         } catch (error) {
@@ -803,7 +801,7 @@ function initTeamMemberView() {
     });
 }
 
-// Enhanced update CSV button state
+
 function updateCSVButton(selectedName) {
     const csvBtn = document.getElementById('csvExportBtn');
     const exportInfo = document.getElementById('exportInfo');
@@ -904,7 +902,7 @@ function showExportError() {
     }
 }
 
-// Enhanced export to CSV function (same as before but with better feedback)
+
 function exportToCSV() {
     const selectedName = document.getElementById("teamSelect").value;
     if (!selectedName) return;
@@ -1060,22 +1058,3 @@ window.addEventListener("popstate", () => {
         loadView("active_attrition"); // default
     }
 });
-
-// --- Placeholder for your other helper functions ---
-/*
-function fetchData(startDate, endDate, entity) {
-    // Your data fetching logic
-}
-
-function fetchEmployeeUpdate(entity, startDate, endDate) {
-    // Your employee update fetching logic
-}
-
-function showNotification(message, isSuccess) {
-    // Your notification display logic
-}
-
-function validateDates() {
-    // Your date validation logic
-}
-*/

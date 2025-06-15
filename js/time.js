@@ -11,5 +11,4 @@ function updateDateTime() {
     document.getElementById('time').textContent = timeString;
   }
   
-  // Update the date and time every second
   setInterval(updateDateTime, 1000);

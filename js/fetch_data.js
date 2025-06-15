@@ -56,10 +56,10 @@ function validateDates(){
 function showNotification(message, isSuccess = true) {
     const popup = document.getElementById("success-popup");
   
-    // Set the message text (assuming you want to show a message somewhere)
+ 
     popup.querySelector(".message").textContent = message;
   
-    // Toggle hidden class to show popup
+
     popup.classList.remove("hidden");
   
     // Set button color based on success or failure
