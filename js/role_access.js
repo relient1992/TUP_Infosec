@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "team_member.html",
             "quality_scores.html",
             "lhi_scorecard.html",
-            "lhi_weekly_efficiency.html"
+            "lhi_weekly_efficiency.html",
+            "fedex_manifest_conso_data.html"
+
         ],
         Manager: [
             "active_attrition.html",
@@ -31,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "bu_lhi.html",
             "quality_scores.html",
             "lhi_scorecard.html",
-            "lhi_weekly_efficiency.html"
+            "lhi_weekly_efficiency.html",
+            "fedex_manifest_conso_data.html"
 
         ],
         User: [
@@ -77,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "project_efficiency.html",
             "team_member.html",
             "quality_scores.html",
+            "fedex_manifest_conso_data.html"
 
         ],
         bps_manager: [
@@ -90,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "bps_financial.html",
             "bu_bps.html",
             "quality_scores.html",
+            "fedex_manifest_conso_data.html"
 
         ],
         bps_user: [
@@ -100,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "project_efficiency.html",
             "team_member.html",
             "quality_scores.html",
+            "fedex_manifest_conso_data.html"
         ]           
         
     };

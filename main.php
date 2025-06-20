@@ -81,6 +81,7 @@ if (!isset($_SESSION['employee_id'])) {
                         <a href="#" data-view="bps_bfp"><h3>BPS BFP</h3></a>
                         <a href="#" data-view="project_efficiency"><h3>Project Efficiency</h3></a>
                         <a href="#" data-view="quality_scores"><h3>Quality Scores</h3></a>
+                        <a href="#" data-view="fedex_manifest_conso_data"><h3>Fedex Manifest Conso Data</h3></a>
                     </div>
                 </div>
 
