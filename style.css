@@ -67,7 +67,6 @@ body{
     user-select: none;
     overflow-x: hidden;
     color: var(--color-dark)
-
 }
 
 .container{
@@ -75,13 +74,24 @@ body{
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 14rem auto 23rem;
+    grid-template-columns: 14rem auto;
+    /* grid-template-columns: 14rem auto 23rem; */
+}
 
+main#main-content {
+    grid-column: 2 / span 1;
+    margin-top: 1.4rem;
+    width: 100%;
+    height: calc(100vh - 4rem); /* adjusts for top bar height */
+    overflow-y: auto;
+}
+
+#right-bottom-section {
+    display: none;
 }
 
 a{
     color: var(--color-dark);
-
 }
 
 img{
@@ -95,7 +105,6 @@ img{
 h1{
     font-weight: 800;
     font-size: 1.8rem;
-
 }
 
 h2{
@@ -268,14 +277,14 @@ aside .sidebar a:hover span {
     flex-direction: column;
   }
   
- 
+  
   .sidebar .child-dropdown {
     display: none;
     flex-direction: column;
     margin-left: 3.5rem;
   }
   
- 
+  
   .sidebar .child-dropdown a {
     font-size: 0.85rem;
     color: var(--color-info-dark);
@@ -511,42 +520,42 @@ main .insights .activelist svg circle{
 
 /* ===== RECENT UPDATES and Team member ====== */
 .page-section, .recent-updates {
-  padding: 20px;
+    padding: 20px;
 }
 
 .card, .recent-updates {
-  background: var(--color-white);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  margin-top: 20px;
+    background: var(--color-white);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-top: 20px;
 }
 
 .wide-table {
-  width: 100%;
-  max-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 
 .responsive-table, .recent-updates {
-  overflow-x: auto;
+    overflow-x: auto;
 }
 
 .responsive-table, .recent-updates table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 /* .responsive-table th,
 .responsive-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
 } */
 
 .dropdown-container select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 
@@ -632,14 +641,55 @@ main table tbody td:hover,
 
 /* === RIGHT TOP (stays fixed or top-aligned) === */
 .right-top {
-    margin-top: 1.4rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 50rem;
+    height: 4rem;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    justify-content: space-between;
+    pointer-events: none;
+    
+}
+
+.right-top * {
+    pointer-events: auto;
+}
+
+@media screen and (max-width: 1024px) {
+    .right-top {
+        left: 10rem; /* smaller sidebar or adjust based on layout */
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .right-top {
+        left: 0;
+        width: 100%;
+        padding: 0 1rem;
+        position: relative; /* optional: allow it to scroll with content */
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .right-top {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
 }
 
 .right-top .top {
     display: flex;
-    justify-content: start; /* changed from 'end' */
+    justify-content: start;
     gap: 2rem;
-    padding-left: 2rem; /* optional: adds spacing from left edge */
+    padding-left: 2rem;
 }
 
 .right-top .top button {
@@ -749,69 +799,69 @@ main table tbody td:hover,
 }
 
 #success-popup {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  background-color: #ddffdd;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  color: var(--color-info-dark);
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background-color: #ddffdd;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: var(--color-info-dark);
 }
 
 
 .hidden {
-  opacity: 0;
-  pointer-events: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: transparent;
-  box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: transparent;
+    box-sizing: border-box;
 }
 
 
 .chart-container {
-  flex: 1 1 300px; 
-  max-width: 800px;
-  min-width: 280px;
-  box-sizing: border-box;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin: 0 auto;
+    flex: 1 1 300px; 
+    max-width: 800px;
+    min-width: 280px;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin: 0 auto;
 }
 
 
 #chart1, #chart2, #chart3, #chart4  {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* Force chart4 to break into a full-width row */
 .chart-container.full-width {
-  flex: 1 1 100%;
-  max-width: 100%;
+    flex: 1 1 100%;
+    max-width: 100%;
 }
 
 #dateRange {
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  max-width: 300px;
-  width: 90%;
-  margin: 1rem auto;
-  display: block;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    max-width: 300px;
+    width: 90%;
+    margin: 1rem auto;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
 #dateRange {
@@ -821,11 +871,11 @@ main table tbody td:hover,
 
 
 @media screen and (max-width: 500px) {
-  .chart-container {
-    flex: 1 1 100%;
-    max-width: 100%;
-    padding: 0.5rem;
-  }
+    .chart-container {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 0.5rem;
+    }
 }
 
 #loading-screen {
@@ -879,3 +929,227 @@ main table tbody td:hover,
     color: #1a73e8;
   }
 
+/* --- Media Queries for Responsiveness --- */
+
+/* Tablets (1024px and below) */
+@media screen and (max-width: 1024px) {
+    .container {
+        grid-template-columns: 7rem auto; /* Smaller sidebar */
+        gap: 1rem;
+    }
+
+    aside .logo {
+        margin-left: 0.5rem;
+        padding: 1rem;
+    }
+
+    aside .sidebar h3 {
+        display: none; /* Hide sidebar text */
+    }
+
+    aside .sidebar a {
+        width: 5.6rem; /* Adjust link width */
+        margin-left: 0;
+        justify-content: center; /* Center icons */
+    }
+
+    aside .sidebar a:hover span {
+        margin-left: 0; /* Reset margin on hover */
+    }
+
+    aside .sidebar a.Active span {
+        margin-left: 0; /* Reset margin for active link */
+    }
+
+    aside .sidebar .dropdown .child-dropdown {
+        margin-left: 0; /* Reset child dropdown margin */
+        align-items: center; /* Center child dropdown links */
+    }
+
+    main .insights {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust columns for insights */
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    main .insights > div {
+        width: auto; /* Allow insights cards to adjust width */
+    }
+
+    .main-layout {
+        flex-direction: column; /* Stack main content and right container */
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .right-container {
+        width: 100%;
+        max-width: 600px; /* Limit width of right container */
+    }
+
+    .employee-count {
+        width: 100%;
+    }
+}
+
+/* Mobile Devices (768px and below) */
+@media screen and (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Single column layout */
+        margin: 0;
+        width: 100%;
+    }
+
+    aside {
+        position: fixed; /* Fix sidebar on small screens */
+        left: -100%; /* Hide sidebar initially */
+        background: var(--color-white);
+        width: 18rem;
+        z-index: 5;
+        box-shadow: 1rem 3rem 4rem var(--color-light);
+        height: 100vh;
+        padding-right: var(--card-padding);
+        display: none; /* Hidden by default and controlled by JS toggle */
+        animation: showSidebar 500ms ease forwards;
+    }
+
+    @keyframes showSidebar {
+        to {
+            left: 0;
+        }
+    }
+
+    aside .close {
+        display: inline-block; /* Show close button */
+        cursor: pointer;
+        font-size: 1.5rem;
+        margin-right: 1.5rem;
+        position: absolute;
+        right: 0;
+    }
+
+    aside .top .logo h2 {
+        display: block; /* Show logo text again */
+    }
+
+    aside .sidebar h3 {
+        display: inline-block; /* Show sidebar text again */
+    }
+
+    aside .sidebar a {
+        width: 100%; /* Full width links */
+        justify-content: flex-start; /* Align text to start */
+        margin-left: 2rem;
+    }
+
+    aside .sidebar a.Active {
+        margin-left: 0;
+    }
+
+    aside .sidebar a.Active:before {
+        content: '';
+        width: 6px;
+        height: 100%;
+        background: var(--color-primary);
+    }
+
+    aside .sidebar a:hover span {
+        margin-left: 1rem;
+    }
+
+    aside .sidebar .dropdown .child-dropdown {
+        margin-left: 3.5rem; /* Indent child dropdowns */
+        align-items: flex-start; /* Align child dropdown text to start */
+    }
+
+    main#main-content {
+        grid-column: 1 / span 1; /* Occupy full width */
+        padding: 1rem;
+    }
+
+    main .insights {
+        grid-template-columns: 1fr; /* Single column for insights */
+    }
+
+    .right-top {
+        position: relative; /* Allow right top to flow with content */
+        left: 0;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .right-top .top button {
+        display: inline-block; /* Show menu button */
+        background: transparent;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--color-dark);
+    }
+}
+
+/* Small Mobile Devices (500px and below) */
+@media screen and (max-width: 500px) {
+    body {
+        font-size: 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    main .insights > div {
+        padding: var(--card-padding-small); /* Adjust padding for insights cards */
+    }
+
+    main .date,
+    main .apply,
+    main .entity {
+        margin-left: 0;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    main .date input[type="date"] {
+        width: calc(100% - 2rem); /* Adjust width of date input */
+    }
+
+    #dateRange {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .chart-container {
+        padding: 0.5rem;
+    }
+
+    .right-top {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    .right-top .top {
+        flex-direction: column;
+        gap: 1rem;
+        padding-left: 0;
+        width: 100%;
+    }
+
+    .right-top .top .profile {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .right-top .theme-toggler {
+        width: 100%;
+    }
+}

@@ -219,9 +219,9 @@ if (!isset($_SESSION['employee_id'])) {
             </div>
 
            
-            <div id="right-bottom-section">
+            <!-- <div id="right-bottom-section">
                
-            </div>
+            </div> -->
 
         </div>
         <!-- END OF RIGHT SECTION -->

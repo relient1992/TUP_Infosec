@@ -73,58 +73,79 @@
     </script>
 
     <script>
-    document.getElementById('registerFormElement').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm_password').value;
-
-        if (password !== confirmPassword) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Password Mismatch',
-                text: 'Passwords do not match. Please try again.'
-            });
-            return;
+        function isStrongPassword(password) {
+            // Must be at least 8 characters, include uppercase, lowercase, number, and special character
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+            return regex.test(password);
         }
 
-        const formData = new FormData(form);
+        document.getElementById('registerFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        fetch('register.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
+            const form = e.target;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (!isStrongPassword(password)) {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: data.message,
-                    timer: 2000,
-                    showConfirmButton: false
+                    icon: 'warning',
+                    title: 'Weak Password',
+                    html: `<p>Your password must be at least 8 characters long and include:</p>
+                        <ul style="text-align: left;">
+                            <li>1 uppercase letter</li>
+                            <li>1 lowercase letter</li>
+                            <li>1 number</li>
+                            <li>1 special character (!@#$%^&*)</li>
+                        </ul>`
                 });
-                form.reset();
-                closeForm();
-            } else {
+                return;
+            }
+
+            if (password !== confirmPassword) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops!',
-                    text: data.message
+                    title: 'Password Mismatch',
+                    text: 'Passwords do not match. Please try again.'
                 });
+                return;
             }
-        })
-        .catch(error => {
-            console.error(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again.'
+
+            const formData = new FormData(form);
+
+            fetch('register.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    form.reset();
+                    closeForm();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: data.message
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.'
+                });
             });
         });
-    });
-    </script> 
+    </script>
     
 </body>
 </html>
