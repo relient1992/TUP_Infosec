@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Defense‑in‑Depth Infographic</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa8bf; --accent:#7dd3fc; --accent2:#60a5fa; --glass: rgba(255,255,255,0.04);
+      --layer1:#60a5fa; --layer2:#7dd3fc; --layer3:#34d399; --layer4:#fbbf24; --layer5:#fb7185;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#071026);color:#e6eef8;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:28px auto;padding:24px}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#07203b;font-size:20px;box-shadow:0 8px 30px rgba(6,8,23,0.7)}
+    h1{margin:0;font-size:22px}
+    p.lead{margin:6px 0 20px;color:var(--muted)}
+
+    .infographic{display:flex;gap:20px;align-items:flex-start}
+    .left{flex:1}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:18px;box-shadow:0 6px 24px rgba(3,6,20,0.6)}
+
+    /* Layers diagram */
+    .layers{position:relative;padding:36px 20px 24px;display:flex;align-items:center;justify-content:center}
+    .layer{width:560px;border-radius:12px;padding:18px;margin:6px 0;display:flex;align-items:center;gap:14px;color:#042034;font-weight:700}
+    .layer .num{width:46px;height:46px;border-radius:10px;background:rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center}
+    .layer .txt{flex:1;padding-left:8px;font-weight:700}
+
+    .l-perimeter{background:linear-gradient(90deg,var(--layer1),var(--layer2));}
+    .l-network{background:linear-gradient(90deg,var(--layer2),#8dd9ff);}
+    .l-endpoint{background:linear-gradient(90deg,var(--layer3),#86efac);}
+    .l-application{background:linear-gradient(90deg,var(--layer4),#ffd88a);}
+    .l-data{background:linear-gradient(90deg,var(--layer5),#ff93a2);} 
+
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .legend .item{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:8px}
+    .dot{width:12px;height:12px;border-radius:3px}
+
+    /* right column */
+    .right{width:320px;display:flex;flex-direction:column;gap:12px}
+    .right .card{padding:14px}
+    .key-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .control{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+
+    .download{margin-top:8px;display:inline-block;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042034;text-decoration:none;font-weight:700}
+
+    .muted{color:var(--muted);font-size:13px}
+
+    @media (max-width:980px){.infographic{flex-direction:column}.right{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">DiD</div>
+      <div>
+        <h1>Defense in Depth — Layered Security Model</h1>
+        <p class="lead">Perimeter → Network → Endpoint → Application → Data — multiple layers to slow attackers and reduce blast radius.</p>
+      </div>
+    </header>
+
+    <div class="infographic">
+      <div class="left">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="muted">Concept</div>
+              <h2 style="margin:8px 0 0;font-size:16px">Defense in Depth (DiD)</h2>
+            </div>
+            <div style="text-align:right">
+              <!-- <div class="muted">Same color theme as SSL/TLS infographic</div> -->
+            </div>
+          </div>
+
+          <div class="layers" aria-hidden="false">
+            <div style="position:relative;max-width:640px">
+              <div class="layer l-perimeter" style="transform:scale(1);">
+                <div class="num">1</div>
+                <div class="txt">Perimeter — Firewalls, IDS/IPS, VPNs, DDoS protection</div>
+              </div>
+
+              <div class="layer l-network">
+                <div class="num">2</div>
+                <div class="txt">Network — Segmentation, NAC, VLANs, Secure routing</div>
+              </div>
+
+              <div class="layer l-endpoint">
+                <div class="num">3</div>
+                <div class="txt">Endpoint — EDR, patching, device hardening, MDM</div>
+              </div>
+
+              <div class="layer l-application">
+                <div class="num">4</div>
+                <div class="txt">Application — Secure SDLC, WAF, input validation, SAST/DAST</div>
+              </div>
+
+              <div class="layer l-data">
+                <div class="num">5</div>
+                <div class="txt">Data — Encryption (at rest & in transit), DLP, access control</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="item"><span class="dot" style="background:var(--layer1)"></span><div class="muted">Perimeter</div></div>
+            <div class="item"><span class="dot" style="background:var(--layer2)"></span><div class="muted">Network</div></div>
+            <div class="item"><span class="dot" style="background:var(--layer3)"></span><div class="muted">Endpoint</div></div>
+            <div class="item"><span class="dot" style="background:var(--layer4)"></span><div class="muted">Application</div></div>
+            <div class="item"><span class="dot" style="background:var(--layer5)"></span><div class="muted">Data</div></div>
+          </div>
+
+          <hr style="border:none;height:1px;background:rgba(255,255,255,0.02);margin:14px 0">
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <div style="flex:1">
+              <b>Why layers matter</b>
+              <ul>
+                <li>Reduces single points of failure</li>
+                <li>Provides detection and containment at multiple stages</li>
+                <li>Improves resilience and incident response time</li>
+              </ul>
+            </div>
+            <div style="text-align:right">
+              <!-- <a class="download" id="downloadBtn">Download HTML</a> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px">Practical implementation tips</h3>
+          <ul>
+            <li>Use network segmentation to limit lateral movement.</li>
+            <li>Enforce least privilege for users and services.</li>
+            <li>Instrument logs and centralize SIEM for cross-layer detection.</li>
+            <li>Encrypt sensitive data and rotate keys securely.</li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="card">
+          <h4 style="margin:0 0 6px">Controls by layer</h4>
+          <div class="key-controls">
+            <div class="control"><b>Perimeter</b><div class="muted">Firewall, IDS/IPS</div></div>
+            <div class="control"><b>Network</b><div class="muted">Segmentation, VPN</div></div>
+            <div class="control"><b>Endpoint</b><div class="muted">EDR, patching</div></div>
+            <div class="control"><b>App</b><div class="muted">WAF, secure coding</div></div>
+            <div class="control"><b>Data</b><div class="muted">Encryption, DLP</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4 style="margin:0 0 6px">Common risks</h4>
+          <ul>
+            <li>Overreliance on perimeter controls</li>
+            <li>Poor patch management at endpoints</li>
+            <li>Insufficient access controls and key management</li>
+          </ul>
+        </div>
+
+        <div class="card center">
+          <h4 style="margin:0 0 8px">Quick checklist</h4>
+          <p class="muted" style="margin:0;line-height:1.6;text-align:left">
+            Inventory → Segment → Patch → Monitor → Encrypt
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- <footer style="margin-top:18px;text-align:center;color:var(--muted);font-size:13px">Styled to match your SSL/TLS infographic · Editable single-file HTML</footer> -->
+  </div>
+
+  <script>
+    // Download the current HTML as a single file
+    document.getElementById('downloadBtn').addEventListener('click', function(e){
+      const content = '<!doctype html>' + document.documentElement.outerHTML;
+      const blob = new Blob([content], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'defense-in-depth-infographic.html';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
