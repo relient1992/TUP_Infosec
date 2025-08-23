@@ -1188,33 +1188,125 @@
         </article>
 
         <article class="section" data-keywords="emerging trends ai security zero trust cloud security quantum computing iot blockchain">
-            <div class="section-header">
-                <div class="icon-wrap"><i class="fa-solid fa-lightbulb"></i></div>
-                <div class="hmeta">
-                    <h2>10. Emerging Trends in Information Security</h2>
-                    <p>Keep an eye on new tech and evolving threats.</p>
-                </div>
-                <i class="fa-solid fa-chevron-down chev"></i>
+        <div class="section-header">
+            <div class="icon-wrap"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="hmeta">
+                <h2>10. Emerging Trends in Information Security</h2>
+                <p>Keep an eye on new tech and evolving threats.</p>
             </div>
-            <div class="section-content">
-                <div class="content-grid">
-                    <div class="content-left">
-                        <p><strong>Core Idea:</strong> Security is evolving with AI, cloud-native architectures, IoT, and new computation models — adapt strategies accordingly.</p>
-                        <p><strong>Notable Trends:</strong></p>
-                        <ul>
-                            <li>AI &amp; ML for defense &amp; offense</li>
-                            <li>Zero Trust adoption</li>
-                            <li>Cloud-native security &amp; container protection</li>
-                            <li>Post-quantum crypto preparation</li>
-                        </ul>
-                        <div class="example"><strong>Example:</strong> Use ML-based anomaly detection in SIEM and plan crypto migrations for quantum-safe algorithms.</div>
-                    </div>
-                    <div class="badge">
-                        <h3>Intended Learning Outcome</h3>
-                        <p>Explore emerging technologies and trends in info security.</p>
-                    </div>
+            <i class="fa-solid fa-chevron-down chev"></i>
+        </div>
+        <div class="section-content">
+            <div class="content-grid">
+                <div class="content-left">
+                    <p><strong>Core Idea:</strong> Security is evolving with AI, cloud-native architectures, IoT, and new computation models — adapt strategies accordingly.</p>
+                    <p><strong>Notable Trends:</strong></p>
+                    <ul>
+                        <li>AI &amp; ML for defense &amp; offense</li>
+                        <li>Zero Trust adoption</li>
+                        <li>Cloud-native security &amp; container protection</li>
+                        <li>Post-quantum crypto preparation</li>
+                    </ul>
+                    <div class="example"><strong>Example:</strong> Use ML-based anomaly detection in SIEM and plan crypto migrations for quantum-safe algorithms.</div>
+                </div>
+                <div class="badge">
+                    <h3>Intended Learning Outcome</h3>
+                    <p>Explore emerging technologies and trends in info security.</p>
                 </div>
             </div>
+
+            <div class="summary-details" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee;">
+
+                <h5>🔒 1. Zero Trust Architecture (ZTA)</h5>
+                <p>Traditionally, once someone was inside the company network, they were trusted. Zero Trust changes this—no one is trusted by default. Every request to access data or systems must be verified, no matter where it comes from.</p>
+                <ul>
+                    <li><strong>Concept:</strong> Traditional security trusts anyone inside the network perimeter. Zero Trust assumes no one can be trusted—whether inside or outside.</li>
+                    <li><strong>Impact:</strong> Prevents hackers or insiders from moving freely inside networks once they get access.</li>
+                    <li><strong>Example:</strong> An employee logging into company files from home must verify identity continuously, not just once.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🤖 2. Artificial Intelligence (AI) & Machine Learning (ML) in Cybersecurity</h5>
+                <p>AI and ML analyze huge amounts of data to detect unusual behavior (like a hacker trying to break in). They also help automate responses to attacks.</p>
+                <ul>
+                    <li><strong>Uses:</strong> Detecting anomalies in network traffic, identifying phishing attempts & deepfake scams, and automating responses to low-level threats.</li>
+                    <li><strong>Impact:</strong> Makes defense systems smarter and faster. But attackers also use AI to create deepfake scams, smart phishing emails, and bypass security.</li>
+                    <li><strong>Example:</strong> AI can detect if a user’s login pattern is suspicious (e.g., logging in from the Philippines and then seconds later from Europe).</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>☁️ 3. Cloud Security & Shared Responsibility</h5>
+                <p>As companies move to cloud platforms like AWS, Azure, and Google Cloud, they must secure their own data, apps, and configurations—while the provider secures the infrastructure. Many breaches happen because companies misconfigure cloud settings.</p>
+                 <ul>
+                    <li><strong>Issue:</strong> Organizations rely heavily on AWS, Azure, and Google Cloud. Misconfigured cloud storage remains one of the top causes of breaches.</li>
+                    <li><strong>Impact:</strong> Cloud security is critical since data and apps are no longer locked inside a company’s private servers.</li>
+                    <li><strong>Example:</strong> Capital One’s 2019 data breach exposed millions of records due to a cloud misconfiguration.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🔐 4. Passwordless Authentication</h5>
+                <p>Replaces traditional passwords with biometrics (fingerprint, face scan), passkeys, or physical security keys.</p>
+                 <ul>
+                    <li><strong>Technology:</strong> Passkeys, biometrics (face/fingerprint), FIDO2 hardware keys.</li>
+                    <li><strong>Impact:</strong> Reduces phishing attacks and password theft, which cause most data breaches.</li>
+                    <li><strong>Example:</strong> Logging into Gmail with a fingerprint or a security key instead of typing a password.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🧪 5. Quantum-Resistant Cryptography</h5>
+                <p>Quantum computers, once advanced enough, will be able to break today’s encryption (like RSA). To prepare, new “quantum-safe” encryption methods are being developed.</p>
+                 <ul>
+                    <li><strong>Issue:</strong> Quantum computers could break RSA and ECC cryptography in minutes.</li>
+                    <li><strong>Impact:</strong> Ensures sensitive data remains secure even in the future when quantum technology matures.</li>
+                    <li><strong>Example:</strong> Banks and governments are testing new algorithms such as CRYSTALS-Kyber.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🌐 6. Supply Chain & Third-Party Security</h5>
+                <p>Hackers now target vendors, contractors, or software suppliers instead of directly attacking a company. If one vendor is weak, thousands of organizations can be exposed.</p>
+                 <ul>
+                    <li><strong>Risk:</strong> Attackers don’t always target a company directly—they compromise vendors.</li>
+                    <li><strong>Impact:</strong> Organizations must monitor not just themselves but also their partners and vendors.</li>
+                    <li><strong>Example:</strong> The SolarWinds hack (2020) spread malware through a software update to thousands of organizations.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🕵️ 7. Privacy-Enhancing Technologies (PETs)</h5>
+                <p>PETs allow organizations to use and share data without exposing private information. Methods include encryption, anonymization, and secure computations.</p>
+                 <ul>
+                    <li><strong>Technology:</strong> Homomorphic encryption (analyzing encrypted data without decrypting), Differential privacy (data sharing without exposing individuals), and Secure multi-party computation (sharing data between entities safely).</li>
+                    <li><strong>Impact:</strong> Helps companies comply with data privacy laws (GDPR, Philippine Data Privacy Act, etc.) while still analyzing data for business.</li>
+                    <li><strong>Example:</strong> Apple uses differential privacy so it can collect data trends without identifying individual users.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>⚡ 8. Ransomware Evolution</h5>
+                <p>Ransomware has shifted from just encrypting files to double and triple extortion—stealing data and threatening to leak it unless payment is made.</p>
+                 <ul>
+                    <li><strong>New Trends:</strong> Double extortion (encrypt + steal data, then threaten to leak it), Triple extortion (target the company, its customers, and partners), and Ransomware-as-a-Service (RaaS).</li>
+                    <li><strong>Impact:</strong> Makes ransomware more dangerous because even if you restore your data, the attackers can still leak sensitive files.</li>
+                    <li><strong>Example:</strong> The Colonial Pipeline ransomware attack (2021) disrupted fuel supplies in the U.S.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>🛡️ 9. Extended Detection & Response (XDR)</h5>
+                <p>XDR combines security data from multiple sources (network, endpoints, email, cloud) into one system to detect and respond to threats faster.</p>
+                <ul>
+                    <li><strong>What It Is:</strong> A next-gen security solution combining data from endpoints, networks, emails, and cloud apps into one detection platform.</li>
+                    <li><strong>Impact:</strong> Security teams can spot and stop attacks more efficiently.</li>
+                    <li><strong>Example:</strong> A suspicious email, endpoint behavior, and cloud login attempt are linked together as one attack chain.</li>
+                </ul>
+                <hr style="margin: 20px 0;">
+
+                <h5>📱 10. IoT & OT Security</h5>
+                <p>Internet of Things (IoT) devices like smart cameras and sensors, and Operational Technology (OT), like factory machines, often lack strong security.</p>
+                 <ul>
+                    <li><strong>Trends:</strong> Edge security solutions, device identity verification, and network segmentation for IoT devices.</li>
+                    <li><strong>Impact:</strong> Attacks on IoT/OT can disrupt not only companies but also critical infrastructure.</li>
+                    <li><strong>Example:</strong> The Mirai botnet used hacked IoT devices to launch massive internet outages.</li>
+                </ul>
+            </div>
+        </div>
         </article>
 
         <article class="section" data-keywords="security policies compliance iso27001 policy governance pci-dss controls documentation audit checklist">
